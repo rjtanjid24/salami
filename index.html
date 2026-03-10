@@ -236,17 +236,17 @@
       
       <div class="form-group">
         <label class="form-label" for="senderInput">প্রেরক</label>
-        <input type="text" id="senderInput" placeholder="আপনার নাম...">
+        <input type="text" id="senderInput" placeholder="আপনার নাম">
       </div>
       
       <div class="form-group">
         <label class="form-label" for="receiverInput">প্রাপক</label>
-        <input type="text" id="receiverInput" placeholder="বন্ধুর নাম...">
+        <input type="text" id="receiverInput" placeholder="বন্ধুর নাম">
       </div>
       
       <div class="form-group">
         <label class="form-label" for="customMsgInput">সালামী মেসেজ</label>
-        <input type="text" id="customMsgInput" placeholder="আপনার সালামী মেসেজ...">
+        <input type="text" id="customMsgInput" placeholder="উদা: আপনার সালামী মেসেজ...">
       </div>
       
       <button id="generateBtn" class="btn btn-secondary">লিংক জেনারেট করুন</button>
@@ -333,6 +333,22 @@
       this.style.display = 'none';
     });
 
+    // লিংক শর্ট করার মূল ফাংশন
+    function fallbackLongUrl(url, sender, receiver, msg) {
+      const shareLinkDiv = document.getElementById('shareLink');
+      const copyBtn = document.getElementById('copyBtn');
+      shareLinkDiv.innerText = url;
+      copyBtn.style.display = 'inline-block';
+      recordData("নতুন লিংক তৈরি (Long Error Fallback)", sender, receiver, msg);
+      
+      copyBtn.onclick = function() {
+        navigator.clipboard.writeText(url).then(() => {
+          copyBtn.innerText = "কপি হয়েছে! ✔️";
+          setTimeout(() => copyBtn.innerText = "লিংক কপি করুন 📋", 2000);
+        });
+      };
+    }
+
     document.getElementById('generateBtn').addEventListener('click', function() {
       const senderVal = document.getElementById('senderInput').value.trim();
       const receiverVal = document.getElementById('receiverInput').value.trim();
@@ -356,39 +372,31 @@
       shareLinkDiv.style.display = 'block';
       copyBtn.style.display = 'none';
 
-      // is.gd ব্যবহার করে লিংক শর্ট করা হচ্ছে
-      fetch(`https://is.gd/create.php?format=simple&url=${encodeURIComponent(longUrl)}`)
-        .then(response => {
-          if (!response.ok) throw new Error('Network response was not ok');
-          return response.text();
-        })
-        .then(shortUrl => {
-          shareLinkDiv.innerText = shortUrl;
+      // JSONP পদ্ধতি ব্যবহার করে ব্রাউজার সিকিউরিটি বাইপাস
+      const callbackName = 'isgd_callback_' + Math.round(100000 * Math.random());
+      
+      window[callbackName] = function(data) {
+        delete window[callbackName];
+        if (data && data.shorturl) {
+          shareLinkDiv.innerText = data.shorturl;
           copyBtn.style.display = 'inline-block';
-          
-          recordData("নতুন লিংক তৈরি (Short)", senderVal, receiverVal, msgVal);
+          recordData("নতুন লিংক তৈরি (Short is.gd)", senderVal, receiverVal, msgVal);
           
           copyBtn.onclick = function() {
-            navigator.clipboard.writeText(shortUrl).then(() => {
+            navigator.clipboard.writeText(data.shorturl).then(() => {
               copyBtn.innerText = "কপি হয়েছে! ✔️";
               setTimeout(() => copyBtn.innerText = "লিংক কপি করুন 📋", 2000);
             });
           };
-        })
-        .catch(error => {
-          console.error("Shortening failed, using long URL", error);
-          shareLinkDiv.innerText = longUrl;
-          copyBtn.style.display = 'inline-block';
-          
-          recordData("নতুন লিংক তৈরি (Long)", senderVal, receiverVal, msgVal);
-          
-          copyBtn.onclick = function() {
-            navigator.clipboard.writeText(longUrl).then(() => {
-              copyBtn.innerText = "কপি হয়েছে! ✔️";
-              setTimeout(() => copyBtn.innerText = "লিংক কপি করুন 📋", 2000);
-            });
-          };
-        });
+        } else {
+          fallbackLongUrl(longUrl, senderVal, receiverVal, msgVal);
+        }
+      };
+
+      const script = document.createElement('script');
+      script.src = `https://is.gd/create.php?format=json&url=${encodeURIComponent(longUrl)}&callback=${callbackName}`;
+      script.onerror = function() { fallbackLongUrl(longUrl, senderVal, receiverVal, msgVal); };
+      document.body.appendChild(script);
     });
   </script>
 </body>
