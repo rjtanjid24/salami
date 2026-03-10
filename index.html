@@ -12,7 +12,6 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   
   <style>
-    /* Global Styles */
     :root {
       --primary-orange: #E67E22;
       --primary-orange-hover: #D35400;
@@ -39,7 +38,6 @@
       overflow-x: hidden;
     }
 
-    /* Main App Card */
     .app-card {
       background: var(--card-white);
       padding: 40px 25px;
@@ -59,7 +57,6 @@
       100% { transform: translateY(0px); }
     }
 
-    /* Header & Subtitle */
     h1 {
       color: var(--primary-orange);
       font-size: 2.2em;
@@ -86,7 +83,6 @@
       color: #555;
     }
 
-    /* Buttons */
     .btn-container {
       display: flex;
       flex-direction: column;
@@ -126,7 +122,6 @@
       background: linear-gradient(45deg, var(--primary-blue), var(--primary-blue-hover));
     }
 
-    /* Sections: Result & Create */
     #result, #createSection {
       display: none;
       margin-top: 30px;
@@ -142,7 +137,6 @@
       100% { transform: scale(1); opacity: 1; }
     }
 
-    /* Result Details */
     .info-box {
       background: rgba(230, 126, 34, 0.08);
       padding: 15px;
@@ -168,7 +162,6 @@
       font-style: italic;
     }
 
-    /* Input Fields for Create Section */
     .form-group {
       text-align: left;
       margin-bottom: 20px;
@@ -242,18 +235,18 @@
       <h2 style="margin-bottom: 25px; color: var(--text-main); font-weight: 700;">ডিজিটাল সালামী বাক্স</h2>
       
       <div class="form-group">
-        <label class="form-label" for="senderInput">আপনার নাম (প্রেরক)</label>
-        <input type="text" id="senderInput" placeholder="উদা: আপনার নাম">
+        <label class="form-label" for="senderInput">প্রেরক</label>
+        <input type="text" id="senderInput" placeholder="আপনার নাম...">
       </div>
       
       <div class="form-group">
-        <label class="form-label" for="receiverInput">বন্ধুর নাম (প্রাপক)</label>
-        <input type="text" id="receiverInput" placeholder="উদা: বন্ধুর নাম">
+        <label class="form-label" for="receiverInput">প্রাপক</label>
+        <input type="text" id="receiverInput" placeholder="বন্ধুর নাম...">
       </div>
       
       <div class="form-group">
         <label class="form-label" for="customMsgInput">সালামী মেসেজ</label>
-        <input type="text" id="customMsgInput" placeholder="উদা: আপনার সালামী মেসেজ...">
+        <input type="text" id="customMsgInput" placeholder="আপনার সালামী মেসেজ...">
       </div>
       
       <button id="generateBtn" class="btn btn-secondary">লিংক জেনারেট করুন</button>
@@ -263,7 +256,6 @@
   </div>
 
   <script>
-    // আপনার Apps Script URL
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzQMbSzFwjLyDk5CH606IUW_OmB3w-iQR3Iet9PqFCNAkKtfolJrdndwvSpNzDljGLNFA/exec';
 
     function recordData(actionName, senderName, receiverName, messageText) {
@@ -364,8 +356,12 @@
       shareLinkDiv.style.display = 'block';
       copyBtn.style.display = 'none';
 
-      fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`)
-        .then(response => response.text())
+      // is.gd ব্যবহার করে লিংক শর্ট করা হচ্ছে
+      fetch(`https://is.gd/create.php?format=simple&url=${encodeURIComponent(longUrl)}`)
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not ok');
+          return response.text();
+        })
         .then(shortUrl => {
           shareLinkDiv.innerText = shortUrl;
           copyBtn.style.display = 'inline-block';
