@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ঈদুল ফিতর | সালামী অ্যাপ</title>
   
+  <meta property="og:title" content="ঈদ মোবারক | তোমার জন্য স্পেশাল সালামী! 🎁">
+  <meta property="og:description" content="ঈদের খুশি দ্বিগুণ হোক! তাড়াতাড়ি লিংকে ক্লিক করে তোমার সালামী গ্রহণ করো।">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=1200&auto=format&fit=crop">
+  <meta property="og:type" content="website">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ঈদ মোবারক | তোমার জন্য স্পেশাল সালামী! 🎁">
+  <meta name="twitter:description" content="ঈদের খুশি দ্বিগুণ হোক! তাড়াতাড়ি লিংকে ক্লিক করে তোমার সালামী গ্রহণ করো।">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=1200&auto=format&fit=crop">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -205,6 +215,12 @@
       color: #2D3436;
       border: 1px solid #ddd;
     }
+
+    .cta-section {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px dashed #ddd;
+    }
   </style>
 </head>
 <body>
@@ -229,6 +245,11 @@
       <p class="ps-text">
         বি.দ্র: আমাকে উল্টা সালামী দিতে চাইলে ইনবক্সে বিকাশ নাম্বার দেওয়া হবে। 😜
       </p>
+      
+      <div class="cta-section">
+        <p style="font-size: 1.1em; color: #555; margin-bottom: 15px; font-weight: 600;">বন্ধুদের বোকা বানাতে চান?</p>
+        <button id="goHomeBtn" class="btn btn-secondary" style="font-size: 1.1em; padding: 12px 20px;">আপনিও ডিজিটাল সালামী পাঠান 🚀</button>
+      </div>
     </div>
 
     <div id="createSection">
@@ -236,17 +257,17 @@
       
       <div class="form-group">
         <label class="form-label" for="senderInput">প্রেরক</label>
-        <input type="text" id="senderInput" placeholder="আপনার নাম">
+        <input type="text" id="senderInput" placeholder="আপনার নাম...">
       </div>
       
       <div class="form-group">
         <label class="form-label" for="receiverInput">প্রাপক</label>
-        <input type="text" id="receiverInput" placeholder="বন্ধুর নাম">
+        <input type="text" id="receiverInput" placeholder="বন্ধুর নাম...">
       </div>
       
       <div class="form-group">
         <label class="form-label" for="customMsgInput">সালামী মেসেজ</label>
-        <input type="text" id="customMsgInput" placeholder="উদা: আপনার সালামী মেসেজ...">
+        <input type="text" id="customMsgInput" placeholder="আপনার সালামী মেসেজ...">
       </div>
       
       <button id="generateBtn" class="btn btn-secondary">লিংক জেনারেট করুন</button>
@@ -333,7 +354,10 @@
       this.style.display = 'none';
     });
 
-    // লিংক শর্ট করার মূল ফাংশন
+    document.getElementById('goHomeBtn').addEventListener('click', function() {
+      window.location.href = window.location.href.split('?')[0];
+    });
+
     function fallbackLongUrl(url, sender, receiver, msg) {
       const shareLinkDiv = document.getElementById('shareLink');
       const copyBtn = document.getElementById('copyBtn');
@@ -372,7 +396,6 @@
       shareLinkDiv.style.display = 'block';
       copyBtn.style.display = 'none';
 
-      // JSONP পদ্ধতি ব্যবহার করে ব্রাউজার সিকিউরিটি বাইপাস
       const callbackName = 'isgd_callback_' + Math.round(100000 * Math.random());
       
       window[callbackName] = function(data) {
