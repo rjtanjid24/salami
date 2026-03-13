@@ -6,13 +6,13 @@
   <title>ঈদুল ফিতর | সালামী অ্যাপ</title>
   
   <meta property="og:title" content="ঈদ মোবারক | স্পেশাল সালামী! 🎁">
-  <meta property="og:description" content="ঈদের খুশি দ্বিগুণ হোক! তাড়াতাড়ি লিংকে ক্লিক করে তোমার সালামী গ্রহণ করো।">
+  <meta property="og:description" content="ঈদের খুশি দ্বিগুণ হোক! তাড়াতাড়ি লিংকে ক্লিক করে তোমার সালামী গ্রহণ করো।">
   <meta property="og:image" content="https://bd-live-21.slatic.net/kf/S52360f42a1d0440ca35132260bf7fa2dI.jpg">
   <meta property="og:type" content="website">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="ঈদ মোবারক | স্পেশাল সালামী! 🎁">
-  <meta name="twitter:description" content="ঈদের খুশি দ্বিগুণ হোক! তাড়াতাড়ি লিংকে ক্লিক করে তোমার সালামী গ্রহণ করো।">
+  <meta name="twitter:description" content="ঈদের খুশি দ্বিগুণ হোক! তাড়াতাড়ি লিংকে ক্লিক করে তোমার সালামী গ্রহণ করো।">
   <meta name="twitter:image" content="https://bd-live-21.slatic.net/kf/S52360f42a1d0440ca35132260bf7fa2dI.jpg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,16 +22,45 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   
   <style>
+    /* বেসিক ভেরিয়েবল সেটআপ */
     :root {
-      --primary-orange: #E67E22;
-      --primary-orange-hover: #D35400;
+      --bg-body: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
       --primary-blue: #3498db;
       --primary-blue-hover: #2980b9;
-      --bg-light: #FFFBF0;
-      --card-white: #FFFFFF;
-      --text-main: #333333;
-      --text-muted: #7f8c8d;
-      --confetti-glow: rgba(230, 126, 34, 0.4);
+      --confetti-glow: rgba(0,0,0,0.15);
+    }
+
+    /* থিম ১: সিলভার হোয়াইট (ডিফল্ট) */
+    .theme-1 {
+      --card-bg: linear-gradient(135deg, #ffffff 0%, #f1f2f6 100%);
+      --text-main: #2f3640;
+      --text-muted: #718093;
+      --primary-btn: #e1b12c;
+      --primary-btn-hover: #fbc531;
+      --info-bg: rgba(225, 177, 44, 0.1);
+      --border-color: #dcdde1;
+    }
+
+    /* থিম ২: রোজ পিচ */
+    .theme-2 {
+      --card-bg: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+      --text-main: #2d3436;
+      --text-muted: #636e72;
+      --primary-btn: #e17055;
+      --primary-btn-hover: #d63031;
+      --info-bg: rgba(255, 255, 255, 0.5);
+      --border-color: #e17055;
+    }
+
+    /* থিম ৩: নাইট গ্রিন */
+    .theme-3 {
+      --card-bg: linear-gradient(135deg, #093028 0%, #237A57 100%);
+      --text-main: #ffffff;
+      --text-muted: #d1d8e0;
+      --primary-btn: #f1c40f;
+      --primary-btn-hover: #f39c12;
+      --info-bg: rgba(255, 255, 255, 0.1);
+      --border-color: #27ae60;
     }
 
     body {
@@ -40,25 +69,26 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #FFFDEB 0%, #FFF5DC 100%);
+      background: var(--bg-body);
       font-family: 'Hind Siliguri', sans-serif;
-      color: var(--text-main);
       text-align: center;
       padding: 20px;
       overflow-x: hidden;
     }
 
     .app-card {
-      background: var(--card-white);
+      background: var(--card-bg);
+      color: var(--text-main);
       padding: 40px 25px;
       border-radius: 25px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
       max-width: 420px;
       width: 100%;
       margin: 0 auto;
       transform: translateY(0px);
       animation: appCardFloat 6s ease-in-out infinite;
       position: relative;
+      transition: background 0.5s ease, color 0.5s ease;
     }
 
     @keyframes appCardFloat {
@@ -68,21 +98,18 @@
     }
 
     h1 {
-      color: var(--primary-orange);
       font-size: 2.2em;
       font-weight: 700;
       margin-bottom: 5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     }
     
     .eid-label {
-      font-size: 0.5em;
-      font-weight: 400;
+      font-size: 0.9em;
+      font-weight: 600;
       color: var(--text-muted);
-      margin-bottom: 25px;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
     }
 
     p#subtitle {
@@ -90,7 +117,8 @@
       line-height: 1.6;
       font-weight: 500;
       margin-bottom: 35px;
-      color: #555;
+      color: var(--text-main);
+      opacity: 0.9;
     }
 
     .btn-container {
@@ -101,43 +129,39 @@
     }
 
     .btn {
-      color: white;
+      color: #fff;
       border: none;
-      padding: 18px 30px;
-      font-size: 1.25em;
+      padding: 16px 30px;
+      font-size: 1.2em;
       font-weight: 600;
       border-radius: 50px;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 15px var(--confetti-glow);
       width: 100%;
-      box-sizing: border-box;
       outline: none;
     }
-
-    .btn:active {
-      transform: scale(0.97);
-    }
+    
+    .btn:active { transform: scale(0.96); }
 
     .btn-primary {
-      background: linear-gradient(45deg, var(--primary-orange), var(--primary-orange-hover));
-      box-shadow: 0 10px 25px var(--confetti-glow);
+      background: var(--primary-btn);
+      color: #111;
     }
+    .btn-primary:hover { background: var(--primary-btn-hover); }
 
-    .btn-primary:hover {
-      box-shadow: 0 12px 30px var(--confetti-glow);
-    }
+    .theme-1 .btn-primary, .theme-3 .btn-primary { color: #111; }
+    .theme-2 .btn-primary { color: #fff; } 
 
-    .btn-secondary {
-      background: linear-gradient(45deg, var(--primary-blue), var(--primary-blue-hover));
-    }
+    .btn-secondary { background: var(--primary-blue); color: #fff; }
+    .btn-secondary:hover { background: var(--primary-blue-hover); }
 
     #result, #createSection {
       display: none;
       margin-top: 30px;
       padding: 20px;
-      background: rgba(230, 126, 34, 0.03);
-      border: 1px dashed var(--primary-orange);
+      background: var(--info-bg);
+      border: 1px dashed var(--border-color);
       border-radius: 15px;
       animation: appPopUp 0.6s ease-out;
     }
@@ -148,21 +172,21 @@
     }
 
     .info-box {
-      background: rgba(230, 126, 34, 0.08);
+      background: var(--info-bg);
       padding: 15px;
       border-radius: 12px;
       text-align: left;
       margin-bottom: 20px;
       font-size: 1.1em;
-      color: #444;
+      border: 1px solid var(--border-color);
     }
     
     .funny-text {
-      color: #c0392b;
       font-weight: 700;
       font-size: 1.45em;
       margin: 20px 0;
       line-height: 1.4;
+      color: var(--text-main);
     }
     
     .ps-text {
@@ -174,59 +198,89 @@
 
     .form-group {
       text-align: left;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
     
     .form-label {
       font-weight: 600;
-      font-size: 1.1em;
-      margin-bottom: 8px;
+      font-size: 1.05em;
+      margin-bottom: 6px;
       display: block;
-      color: #444;
+      color: var(--text-main);
     }
 
     input[type="text"] {
       width: 100%;
-      padding: 15px 20px;
-      border: 1px solid #ddd;
+      padding: 14px 15px;
+      border: 1px solid var(--border-color);
       border-radius: 10px;
       font-size: 1.1em;
       font-family: 'Hind Siliguri', sans-serif;
       box-sizing: border-box;
-      background: #F9FAFB;
+      background: rgba(255, 255, 255, 0.8);
+      color: #333;
       transition: all 0.2s ease;
     }
     
     input[type="text"]:focus {
-      border-color: var(--primary-blue);
-      box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
-      background: white;
+      border-color: var(--primary-btn);
       outline: none;
+      background: #fff;
     }
+
+    /* থিম সিলেক্টর স্টাইল */
+    .theme-selector {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    
+    .theme-options {
+      display: flex;
+      gap: 15px;
+      margin-top: 10px;
+      justify-content: center;
+    }
+    
+    .theme-dot {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: transform 0.2s;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    .theme-dot:hover { transform: scale(1.1); }
+    .theme-dot.active { border-color: var(--primary-blue); transform: scale(1.1); }
+    
+    .dot-1 { background: linear-gradient(135deg, #ffffff, #dcdde1); }
+    .dot-2 { background: linear-gradient(135deg, #ffeaa7, #fab1a0); }
+    .dot-3 { background: linear-gradient(135deg, #093028, #237A57); }
 
     #shareLink {
       word-break: break-all;
-      background: #F0F4F8;
+      background: #fff;
+      color: #333;
       padding: 15px;
       border-radius: 8px;
       font-size: 1em;
       margin-top: 15px;
       display: none;
-      color: #2D3436;
-      border: 1px solid #ddd;
+      font-weight: bold;
     }
 
     .cta-section {
       margin-top: 30px;
       padding-top: 20px;
-      border-top: 1px dashed #ddd;
+      border-top: 1px dashed var(--border-color);
     }
   </style>
 </head>
 <body>
 
-  <div class="app-card">
-    <div class="eid-label">ঈদুল ফিতর ২০২৬</div>
+  <div class="app-card theme-1" id="mainCard">
+    <div class="eid-label">✨ ইদ স্পেশাল সালামী কার্ড ✨</div>
     
     <h1>ঈদ মোবারক! 🌙</h1>
     <p id="subtitle">ঈদুল ফিতরের খুশি দ্বিগুণ হোক! তোমার স্পেশাল সালামী নিচে অপেক্ষা করছে।</p>
@@ -247,13 +301,22 @@
       </p>
       
       <div class="cta-section">
-        <p style="font-size: 1.1em; color: #555; margin-bottom: 15px; font-weight: 600;">বন্ধুদের বোকা বানাতে চান?</p>
+        <p style="font-size: 1.1em; margin-bottom: 15px; font-weight: 600;">বন্ধুদের বোকা বানাতে চান?</p>
         <button id="goHomeBtn" class="btn btn-secondary" style="font-size: 1.1em; padding: 12px 20px;">আপনিও ডিজিটাল সালামী পাঠান 🚀</button>
       </div>
     </div>
 
     <div id="createSection">
-      <h2 style="margin-bottom: 25px; color: var(--text-main); font-weight: 700;">ডিজিটাল সালামী বাক্স</h2>
+      <h2 style="margin-bottom: 20px; font-weight: 700;">ডিজিটাল সালামী বাক্স</h2>
+      
+      <div class="theme-selector">
+        <label class="form-label" style="text-align: center;">কার্ডের ডিজাইন বেছে নিন:</label>
+        <div class="theme-options">
+          <div class="theme-dot dot-1 active" data-theme="1"></div>
+          <div class="theme-dot dot-2" data-theme="2"></div>
+          <div class="theme-dot dot-3" data-theme="3"></div>
+        </div>
+      </div>
       
       <div class="form-group">
         <label class="form-label" for="senderInput">প্রেরক</label>
@@ -270,9 +333,9 @@
         <input type="text" id="customMsgInput" placeholder="আপনার সালামী মেসেজ...">
       </div>
       
-      <button id="generateBtn" class="btn btn-secondary">লিংক জেনারেট করুন</button>
+      <button id="generateBtn" class="btn btn-primary">লিংক জেনারেট করুন</button>
       <div id="shareLink"></div>
-      <button id="copyBtn" class="btn btn-primary" style="display: none; margin-top: 15px;">লিংক কপি করুন 📋</button>
+      <button id="copyBtn" class="btn btn-secondary" style="display: none; margin-top: 15px;">লিংক কপি করুন 📋</button>
     </div>
   </div>
 
@@ -296,7 +359,7 @@
     const randomMessages = [
       "অত্যন্ত দুঃখের সাথে জানানো যাচ্ছে যে, দাতার পকেট বর্তমানে সম্পূর্ণ ফাঁকা! 😭",
       "ঈদের শপিং করতে গিয়ে দেউলিয়া হয়ে গেছি! তাই সালামী বন্ধ! 🛍️",
-      "ডিজিটাল যুগে সালামীও ডিজিটাল! এই নাও তোমার ভার্চুয়াল সালামী: 💸 (ক্যাশআউট করা যাবে না)",
+      "ডিজিটাল যুগে সালামীও ডিজিটাল! এই নাও তোমার ভার্চুয়াল সালামী: 💸 (ক্যাশআউট করা যাবে শ্রেষ্ঠ)",
       "তুমি এখন বড় হয়ে গেছো! এখন তোমার সালামী দেওয়ার বয়স, নেওয়ার নয়! 😠",
       "সিস্টেম এরর! আপনার সালামী অন্য অ্যাকাউন্টে ট্রান্সফার হয়ে গেছে! 🚫",
       "সালামীর বদলে এক বাটি সেমাইয়ের দাওয়াত রইলো! চলে এসো! 🍜",
@@ -309,19 +372,35 @@
     const urlMessage = urlParams.get('m');
 
     let customData = null;
+    let currentSelectedTheme = "1";
+    
+    const mainCard = document.getElementById('mainCard');
+    const themeDots = document.querySelectorAll('.theme-dot');
+
+    themeDots.forEach(dot => {
+      dot.addEventListener('click', function() {
+        themeDots.forEach(d => d.classList.remove('active'));
+        this.classList.add('active');
+        currentSelectedTheme = this.getAttribute('data-theme');
+        mainCard.className = `app-card theme-${currentSelectedTheme}`;
+      });
+    });
     
     if (urlMessage) {
       document.getElementById('showCreateBtn').style.display = 'none';
       try {
         const decodedString = decodeURIComponent(atob(urlMessage));
         customData = JSON.parse(decodedString);
+        if(customData.t) {
+           mainCard.className = `app-card theme-${customData.t}`;
+        }
       } catch (e) {
         console.log("Invalid custom link");
       }
     }
 
     document.getElementById('salamiBtn').addEventListener('click', function() {
-      confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+      confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
 
       document.getElementById('mainButtons').style.display = 'none';
       document.getElementById('subtitle').style.display = 'none';
@@ -383,7 +462,7 @@
         return;
       }
 
-      const payload = JSON.stringify({ s: senderVal, r: receiverVal, m: msgVal });
+      const payload = JSON.stringify({ s: senderVal, r: receiverVal, m: msgVal, t: currentSelectedTheme });
       const encodedMsg = btoa(encodeURIComponent(payload));
       
       const baseUrl = window.location.href.split('?')[0];
@@ -424,5 +503,3 @@
   </script>
 </body>
 </html>
-
-
